@@ -1,34 +1,34 @@
 import express from "express";
 import dotenv from "dotenv";
-import cors  from "cors"
+import cors from "cors";
 import dbConnect from "./config/dbConnect.js";
-import { clerkMiddleware } from '@clerk/express'
-import globalErrorHandler from "./middlewares/errorMiddleware.js";
+import { clerkMiddleware } from "@clerk/express";
 import clerkWebhooks from "./controllers/clerkWebhooks.js";
+import globalErrorHandler from "./middlewares/errorMiddleware.js";
 
-dotenv.config()
+dotenv.config();
 dbConnect();
-const app=express();
-// middlewares
-app.use(cors({
-    origin:['http://localhost:5173'],
-    credentials:true
-}))
+
+const app = express();
+
+app.use(cors());
+
 app.use(express.json());
-app.use(express.urlencoded({extended:true}))
 app.use(clerkMiddleware());
 
 
-// routes
-app.use("/api/v1/clerk",clerkWebhooks)
-app.get("/",(req,res)=>{
-    res.send("Home page")
-})
+// Routes
 
-// global error handler
-app.use(globalErrorHandler)
-// listen to the server
-const PORT=process.env.PORT || 8000;
-app.listen(PORT,()=>{
-    console.log(`Server is running on port ${PORT}`);
-})
+app.use("/api/v1/clerk", clerkWebhooks);
+
+app.get("/", (req, res) => {
+  res.send("Home page");
+});
+
+// Global error handler
+app.use(globalErrorHandler);
+
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

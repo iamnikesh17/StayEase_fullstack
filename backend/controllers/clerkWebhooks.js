@@ -1,18 +1,17 @@
 import User from "../models/User.js";
 import {Webhook} from "svix";
-import appError from "../utils/appError.js";
 
 
-const clerkWebhooks = async (req,res,next)=>{
+const clerkWebhooks = async (req,res)=>{
     try{
         const whook=new Webhook(process.env.CLERK_WEBHOOK_SECRET);
 
         // getting headers
 
         const headers={
-            "svid-id":req.headers["svid-id"],
-            "svid-timestamp":req.headers["svid-timestamp"],
-            "svid-signature":req.headers["svid-signature"]
+            "svix-id":req.headers["svix-id"],
+            "svix-timestamp":req.headers["svix-timestamp"],
+            "svix-signature":req.headers["svix-signature"]
         }
 
         // verifying headers
@@ -53,7 +52,6 @@ const clerkWebhooks = async (req,res,next)=>{
 
     }catch(error){
         console.log(error.message)
-        next(appError(error.message))
     }
 }
 
