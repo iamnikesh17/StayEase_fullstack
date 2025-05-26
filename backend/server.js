@@ -21,6 +21,9 @@ app.use(clerkMiddleware());
 
 // routes
 app.use("/api/v1/clerk",clerkWebhooks)
+app.get("/",(req,res)=>{
+    res.send("Home page")
+})
 
 // global error handler
 app.use(globalErrorHandler)
