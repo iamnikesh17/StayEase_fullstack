@@ -1,0 +1,38 @@
+import { assets } from '@/assets/assets'
+import React from 'react'
+import { NavLink } from 'react-router-dom'
+
+const Sidebar = () => {
+    const sidebarLinks=[
+        {
+            name:"Dashboard",
+            path:"/owner",
+            icon:assets.dashboardIcon
+        },
+           {
+            name:"Add Room",
+            path:"/owner/add-room",
+            icon:assets.addIcon
+        },
+           {
+            name:"List Room",
+            path:"/owner/list-room",
+            icon:assets.listIcon
+        },
+
+    ]
+  return (
+    <div className='md:w-64 w-16 border-r border-gray-400 h-full '>
+        {
+            sidebarLinks.map((link,index)=>(
+                <NavLink to={link.path} key={index} end="/owner" className={({isActive})=>`flex items-center gap-3 px-4 py-3 md:px-8 ${isActive?"border-r-4 md:border-r-[6px] bg-blue-600/10 border-blue-600 text-blue-600":"hover:bg-gray-100/90 border-white text-gray-700"}`}>
+                    <img src={link.icon} alt={link.name} className='min-h-6 min-w-6'/>
+                    <p className='md:block hidden text-center'>{link.name}</p>
+                </NavLink>
+            ))
+        }
+    </div>
+  )
+}
+
+export default Sidebar
